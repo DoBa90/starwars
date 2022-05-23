@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div v-if="peopleData">
+    <Header/>
+    <Main :people="peopleData.results"/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Main from './views/home.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Main,
+    Header
+  },
+  data() {
+    return { 
+      peopleData: null
+    }
+  },
+  created() {
+    fetch("https://swapi.dev/api/people/?format=json")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      return this.peopleData = data})
+    .catch((error) => {
+      console.log("There was an error!", error);
+    })
+  },
+  mounted() {
+    this.$router.push({name:'home'})
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 60px;
 }
 </style>
