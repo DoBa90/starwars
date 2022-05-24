@@ -1,4 +1,5 @@
 <template>
+  <Header headline="People"/>
   <div class="main">
     <Filter v-if="this.movies" :movieLinks="movies" @someEvent="this.selected = $event"/>
   <div class="main__tile">
@@ -9,20 +10,20 @@
 
 <script>
 import Tile from '../components/Tile.vue'
+import Header from '../components/Header.vue'
 import Filter from '../components/Filter.vue'
 
 export default {
   name: 'HelloWorld',
    components: {
     Tile,
+    Header,
     Filter
   },
   data() {
     return { 
       selected: [],
       movies: [],
-      object: {},
-      // orderedPeople: this.people,
     }
   },
   props: {
@@ -40,29 +41,19 @@ export default {
       fetch(url).then(resp => resp.json())
     )).then(texts => {
       this.movies = texts.map((el) => el)
+    })    
+    .catch((error) => {
+      console.log("There was an error!", error);
     })
   },
   computed: {
     orderedPeople () {
-      if(this.selected.length > 0) {
-        const char = this.orderByCharacters();
-        console.log(char)
-        return char;
+      if(this.selected.length > 1) {
+        return this.selected;
       }
       return this.people
     }
   },
-  methods: {
-    async orderByCharacters() {
-      let newCharacters = [];
-      Promise.all(this.selected.split(',').map((url) =>
-        fetch(url).then(res => res.json())
-      )).then(data => {
-        return newCharacters = data.map(el => el)})
-      console.log(newCharacters)
-      return newCharacters;
-    }
-  }
 }
 </script>
 
@@ -75,7 +66,7 @@ export default {
 
   &__tile{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
   }
 }

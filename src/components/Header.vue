@@ -1,5 +1,6 @@
 <template>
   <div class="header">
+    <div v-if="this.headline != 'People'">Planet: </div>
     {{headline}}
   </div>
 </template>
@@ -8,24 +9,19 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
-  },
-  computed: {
-    headline() {
-      return this.$route.fullPath === "/" ? 'People' : 'name'
-    }
-  },
-  methods() {
-    console.log(this.$router)
+    headline: String
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .header {
-    border: 1px solid #000000;
-    margin-bottom: 16px;
-    padding: 8px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #000000;
+  margin-bottom: 16px;
+  padding: 8px;
+  background: #afacac;
+  width: 100%;
 }
 </style>

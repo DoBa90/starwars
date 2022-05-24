@@ -1,38 +1,30 @@
 <template>
   <div v-if="peopleData">
-    <Header/>
-    <Main :people="peopleData.results"/>
+    <router-view :people="this.peopleData.results"></router-view>
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Main from './views/home.vue'
 
 export default {
   name: 'App',
-  components: {
-    Main,
-    Header
-  },
   data() {
     return { 
       peopleData: null
     }
   },
   created() {
-    fetch("https://swapi.dev/api/people/?format=json")
+    fetch("https://swapi.dev/api/people/")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       return this.peopleData = data})
+    .then(() => {
+      this.$router.push({name: 'home'})
+    })
     .catch((error) => {
       console.log("There was an error!", error);
     })
   },
-  mounted() {
-    this.$router.push({name:'home'})
-  }
 }
 </script>
 
@@ -44,5 +36,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 60px;
+}
+
+html, 
+body {
+    margin: 0;
+    padding: 0;
+    background-color:#dfe0e0;
 }
 </style>

@@ -5,7 +5,7 @@
     <div>Eyes: {{person.eye_color}}</div>
     <div>Gender: {{person.gender}}</div>
     <div> Planet: 
-      <div @click="handleClick()">Link</div>
+      <a class="tile__link" @click="handleClick()">Link</a>
     </div>
   </div>
 </template>
@@ -18,8 +18,7 @@ export default {
   },
   methods: {
     handleClick() {
-      console.log(this.$route.fullPath)
-      this.$router.push({name:'details'})
+      this.$router.push({name:'details', params: this.person})
     }
   }
 }
@@ -35,11 +34,14 @@ export default {
   margin-top: 16px;
   text-align: left;
   width: 200px;
+  background: #afacac;
 
-// @media only screen and (max-width: 600px) {
-//   .tile {
-//     width: calc(100% / 3);
-//   }
-// }
+  &__link {
+    cursor: pointer;
+
+    &:link {
+      color: rgb(87, 119, 206);
+    } 
+  }
 }
 </style>
