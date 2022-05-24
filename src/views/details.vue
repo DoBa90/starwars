@@ -7,6 +7,7 @@
       <div>Terrain: {{homeworldData.terrain}}</div>
       <div>Climate: {{homeworldData.climate}}</div>
     </div>
+    <button @click="this.$router.push({name: 'home'})">Go back</button>
   </div>
 </template>
 
